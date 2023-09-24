@@ -13,3 +13,7 @@
 - mongoose,
 - dotenv,
 - bcryptjs # for password change in hash
+
+# JWT
+
+- https://jwt.io/
