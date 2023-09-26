@@ -35,13 +35,19 @@ const registerController = async (req, res) => {
 };
 
 const loginController = async (req, res) => {
-    console.log("req", req);
     try {
         const user = await userModel.findOne({ email: req.body.email })
         if (!user) {
             return res.status(404).send({
                 success: false,
                 message: 'User Not Found'
+            })
+        }
+
+        if (user.role !== req.body.role) {
+            return res.status(500).send({
+                success: false,
+                message: 'Role does not match'
             })
         }
 
