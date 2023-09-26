@@ -32,4 +32,27 @@ const createInventoryController = async (req, res) => {
     }
 };
 
-module.exports = { createInventoryController };
+
+// GET ALL BLOOD RECORDS
+const getInventoryController = async (req, res) => {
+    try {
+        const inventory = await inventoryModel.find({
+            organization: req.body.userId
+        }).populate('donar').populate('hospital').sort({ createdAt: -1 })
+        return res.status(200).send({
+            success: true,
+            message: 'Get All Records Successfully',
+            inventory
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({
+            success: false,
+            message: 'Error in Get All Inventory',
+            error
+        })
+    }
+}
+
+
+module.exports = { createInventoryController, getInventoryController };
