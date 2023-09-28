@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import InputType from './InputType';
 import { Link } from 'react-router-dom';
+import { handleLoginSubmit, handleRegisterSubmit } from '../../../services/authService';
 
 const Form = ({ formType, submitBtn, formTitle }) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
-        role: 'donor',
+        role: 'donar',
         name: '',
         organizationName: '',
         hospitalName: '',
@@ -15,18 +16,24 @@ const Form = ({ formType, submitBtn, formTitle }) => {
         phone: '',
     });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+    const handleChange = (event) => {
+        const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
     };
 
     return (
         <div>
-            <form>
+            <form onSubmit={(event) => {
+                if (formType === 'login') {
+                    handleLoginSubmit(event, formData.email, formData.password, formData.role)
+                } else {
+                    handleRegisterSubmit(event, formData)
+                }
+            }}>
                 <h1 className='text-center'>{formTitle}</h1>
                 <hr />
                 <div className='d-flex mb-3'>
-                    {['donor', 'admin', 'hospital', 'organization'].map((roleOption, index) => (
+                    {['donar', 'admin', 'hospital', 'organization'].map((roleOption, index) => (
                         <div className={`form-check ${index > 0 && 'ms-2'}`} key={roleOption}>
                             <input
                                 type='radio'

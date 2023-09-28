@@ -13,6 +13,8 @@
 - mongoose,
 - dotenv,
 - bcryptjs # for password change in hash
+- axios
+- concurrently # Run multiple commands concurrently
 
 # JWT
 
