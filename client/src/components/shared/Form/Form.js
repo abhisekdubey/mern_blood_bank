@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import InputType from './InputType';
+import { Link } from 'react-router-dom';
 
 const Form = ({ formType, submitBtn, formTitle }) => {
     const [formData, setFormData] = useState({
@@ -25,8 +26,8 @@ const Form = ({ formType, submitBtn, formTitle }) => {
                 <h1 className='text-center'>{formTitle}</h1>
                 <hr />
                 <div className='d-flex mb-3'>
-                    {['donor', 'admin', 'hospital', 'organization'].map((roleOption) => (
-                        <div className='form-check ms-2' key={roleOption}>
+                    {['donor', 'admin', 'hospital', 'organization'].map((roleOption, index) => (
+                        <div className={`form-check ${index > 0 && 'ms-2'}`} key={roleOption}>
                             <input
                                 type='radio'
                                 className='form-check-input'
@@ -144,7 +145,20 @@ const Form = ({ formType, submitBtn, formTitle }) => {
                             return null;
                     }
                 })()}
-                <div className='d-flex'>
+                <div className='d-flex flex-row justify-content-between'>
+                    {
+                        (formType === 'login') ? (
+                            <p>Not register yet? Register
+                                <Link to="/register" > Here!</Link>
+                            </p>
+                        )
+                            :
+                            (
+                                <p>Already Registered?
+                                    <Link to="/login" > Login</Link>
+                                </p>
+                            )
+                    }
                     <button type='submit' className='btn btn-primary'>
                         {submitBtn}
                     </button>
